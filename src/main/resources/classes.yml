@@ -1,0 +1,65 @@
+global:
+  consumable-radius: 32
+data:
+  bard:
+    warmup: 10
+    holdable-update-rate: 3
+    effect-range: 32.0
+    passive:
+      SPEED: 2
+      RESISTANCE: 1
+    consumables:
+      LEVITATION:
+        material: PHANTOM_MEMBRANE
+        application: FRIENDLY
+        cooldown: 120
+        duration: 5
+        amplifier: 5
+      SPEED:
+        material: SUGAR
+        application: FRIENDLY
+        cooldown: 60
+        duration: 5
+        amplifier: 5
+      JUMP_BOOST:
+        material: FRIENDLY
+        duration: 5
+        amplifier: 3
+        cooldown: 60
+        application: SELF
+  archer:
+    warmup: 10
+    max-damage-dealt: 30
+    consecutive-base-damage: 5.0
+    consecutive-multiplier: 1.25
+    damage-per-block: 0.1
+    mark-duration: 10
+    mark-percentage: 0.15
+    passive:
+      SPEED: 2
+      RESISTANCE: 1
+    consumables:
+      LEVITATION:
+        material: PHANTOM_MEMBRANE
+        application: SELF
+        cooldown: 120
+        duration: 5
+        amplifier: 5
+      SPEED:
+        material: SUGAR
+        application: SELF
+        cooldown: 60
+        duration: 5
+        amplifier: 5
+      JUMP_BOOST:
+        material: RABBIT_FOOT
+        duration: 5
+        amplifier: 3
+        cooldown: 60
+        application: SELF
+  miner:
+    warmup: 5
+    passive:
+      SPEED: 2
+      NIGHT_VISION: 0
+      HASTE: 8
