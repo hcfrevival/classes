@@ -1,6 +1,23 @@
 global:
   consumable-radius: 32
 data:
+  diver:
+    warmup: 10
+    damage-per-block: 0.1
+    max-damage-dealt: 15.0
+    riptide-cooldown: 5
+    riptide-reset-on-hit: true
+    call-of-the-sea-cooldown: 600
+    call-of-the-sea-duration: 300
+    passive:
+      WATER_BREATHING: 1
+    consumables:
+      DOLPHINS_GRACE:
+        material: PRISMARINE_SHARD
+        application: SELF
+        cooldown: 120
+        duration: 5
+        amplifier: 0
   bard:
     warmup: 10
     holdable-update-rate: 3

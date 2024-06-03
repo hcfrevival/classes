@@ -12,10 +12,12 @@ import net.hcfrevival.classes.events.ClassUnreadyEvent;
 import net.hcfrevival.classes.listener.ArcherListener;
 import net.hcfrevival.classes.listener.ClassArmorListener;
 import net.hcfrevival.classes.listener.ConsumableListener;
+import net.hcfrevival.classes.listener.DiverListener;
 import net.hcfrevival.classes.task.ConsumableCooldownTask;
 import net.hcfrevival.classes.types.IClass;
 import net.hcfrevival.classes.types.impl.Archer;
 import net.hcfrevival.classes.types.impl.Bard;
+import net.hcfrevival.classes.types.impl.Diver;
 import net.hcfrevival.classes.types.impl.Miner;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -51,11 +53,13 @@ public class ClassService implements IAresService {
         classRepository.add(new Archer(this));
         classRepository.add(new Miner(this));
         classRepository.add(new Bard(this));
+        classRepository.add(new Diver(this));
         classRepository.forEach(toLoad -> toLoad.getConfig().load());
 
         plugin.registerListener(new ArcherListener(this));
         plugin.registerListener(new ClassArmorListener(this));
         plugin.registerListener(new ConsumableListener(this));
+        plugin.registerListener(new DiverListener(this));
     }
 
     @Override

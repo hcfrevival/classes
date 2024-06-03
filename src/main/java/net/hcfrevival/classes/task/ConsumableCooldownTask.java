@@ -9,6 +9,9 @@ import lombok.Getter;
 import net.hcfrevival.classes.ClassMessages;
 import net.hcfrevival.classes.ClassService;
 import net.hcfrevival.classes.events.ClassConsumableUnlockEvent;
+import net.hcfrevival.classes.events.PlayerCallOfTheSeaCooldownExpireEvent;
+import net.hcfrevival.classes.events.PlayerRiptideCooldownExpireEvent;
+import net.hcfrevival.classes.types.impl.Diver;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -23,6 +26,51 @@ public final class ConsumableCooldownTask extends BukkitRunnable {
 
     @Override
     public void run() {
+        // Special Cooldowns
+        service.getClassRepository().forEach(playerClass -> {
+            // Diver Start
+            if (playerClass instanceof Diver diver) {
+                Set<UUID> toRemoveRiptide = Sets.newHashSet();
+                Set<UUID> toRemoveCOTS = Sets.newHashSet();
+
+                diver.getRiptideCooldowns().forEach((uuid, expire) -> {
+                    if (expire <= Time.now()) {
+                        toRemoveRiptide.add(uuid);
+                    }
+                });
+
+                diver.getCallOfTheSeaCooldowns().forEach((uuid, expire) -> {
+                    if (expire <= Time.now()) {
+                        toRemoveCOTS.add(uuid);
+                    }
+                });
+
+                toRemoveRiptide.forEach(removedUUID -> {
+                    diver.getRiptideCooldowns().remove(removedUUID);
+                    new Scheduler(service.getPlugin()).sync(() -> {
+                        Player player = Bukkit.getPlayer(removedUUID);
+
+                        if (player != null && player.isOnline()) {
+                            Bukkit.getPluginManager().callEvent(new PlayerRiptideCooldownExpireEvent(player));
+                        }
+                    }).run();
+                });
+
+                toRemoveCOTS.forEach(removedUUID -> {
+                    diver.getCallOfTheSeaCooldowns().remove(removedUUID);
+                    new Scheduler(service.getPlugin()).sync(() -> {
+                        Player player = Bukkit.getPlayer(removedUUID);
+
+                        if (player != null && player.isOnline()) {
+                            Bukkit.getPluginManager().callEvent(new PlayerCallOfTheSeaCooldownExpireEvent(player));
+                        }
+                    }).run();
+                });
+            }
+            // Diver End
+        });
+
+        // Consumables
         service.getClassRepository().forEach(playerClass -> playerClass.getConfig().getConsumables().forEach(consumable -> {
             Set<UUID> toRemove = Sets.newHashSet();
             consumable.getCooldowns().forEach((uuid, expire) -> {
