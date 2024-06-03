@@ -8,7 +8,6 @@ import net.hcfrevival.classes.ClassService;
 import net.hcfrevival.classes.events.ClassDeactivateEvent;
 import net.hcfrevival.classes.events.ClassReadyEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,7 +21,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Getter
-public class ClassArmorListener implements Listener {
+public final class ClassArmorListener implements Listener {
     public final ClassService service;
     public final Set<UUID> recentlyLoggedIn;
 

@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 @AllArgsConstructor
-public class ConsumableListener implements Listener {
+public final class ConsumableListener implements Listener {
     @Getter public final ClassService service;
 
     @EventHandler
