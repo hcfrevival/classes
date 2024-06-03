@@ -5,7 +5,7 @@ import net.hcfrevival.classes.types.IClass;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 @Setter
-public class BardConfig extends GenericConfig {
+public final class BardConfig extends GenericConfig {
     public int warmup;
     public int holdableUpdateRate;
     public double effectRange;

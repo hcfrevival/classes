@@ -1,34 +1,20 @@
 package net.hcfrevival.classes.config.impl;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import lombok.Getter;
-import lombok.Setter;
-import net.hcfrevival.classes.consumables.IClassConsumable;
 import net.hcfrevival.classes.types.IClass;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.potion.PotionEffectType;
-
-import java.util.List;
-import java.util.Map;
 
 @Getter
-public class ArcherConfig extends GenericConfig {
-    public Map<PotionEffectType, Integer> passiveEffects;
-    public List<IClassConsumable> consumables;
-    @Setter public int warmup;
-
-    @Getter double maxDamageDealt;
-    @Getter double consecutiveBase;
-    @Getter double consecutiveMultiplier;
-    @Getter double damagePerBlock;
-    @Getter double markDamagePercentage;
-    @Getter int markDuration;
+public final class ArcherConfig extends GenericConfig {
+    double maxDamageDealt;
+    double consecutiveBase;
+    double consecutiveMultiplier;
+    double damagePerBlock;
+    double markDamagePercentage;
+    int markDuration;
 
     public ArcherConfig(IClass parent) {
         super(parent);
-        this.passiveEffects = Maps.newHashMap();
-        this.consumables = Lists.newArrayList();
         this.warmup = 10;
     }
 
@@ -36,7 +22,7 @@ public class ArcherConfig extends GenericConfig {
     public void load() {
         super.load();
 
-        YamlConfiguration conf = getParent().getService().getPlugin().loadConfiguration("classes.yml");
+        YamlConfiguration conf = getParent().getService().getPlugin().loadConfiguration("classes");
         String key = "data." + getParent().getName().toLowerCase() + ".";
 
         this.maxDamageDealt = conf.getDouble(key + "max-damage-dealt", 30);
