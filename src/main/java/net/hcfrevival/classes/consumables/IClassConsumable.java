@@ -98,5 +98,14 @@ public interface IClassConsumable {
                 }).delay((getDuration() * 20L) + 1L).run();
             }
         });
+
+        if (!getApplicationType().equals(EConsumableApplicationType.SELF)) {
+            int affectedCount = (int)consumeEvent.getAffectedPlayers().stream().filter(affectedUUID -> !affectedUUID.equals(player.getUniqueId())).count();
+            Component affectedComponent = Component.text("Your effect has been applied to", NamedTextColor.BLUE)
+                    .appendSpace().append(Component.text(affectedCount, NamedTextColor.AQUA))
+                    .appendSpace().append(Component.text("player" + (affectedCount > 1 ? "s" : ""), NamedTextColor.BLUE));
+
+            player.sendMessage(affectedComponent);
+        }
     }
 }
