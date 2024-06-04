@@ -9,16 +9,11 @@ import net.hcfrevival.classes.config.ClassGlobalConfig;
 import net.hcfrevival.classes.events.ClassDeactivateEvent;
 import net.hcfrevival.classes.events.ClassReadyEvent;
 import net.hcfrevival.classes.events.ClassUnreadyEvent;
-import net.hcfrevival.classes.listener.ArcherListener;
-import net.hcfrevival.classes.listener.ClassArmorListener;
-import net.hcfrevival.classes.listener.ConsumableListener;
-import net.hcfrevival.classes.listener.DiverListener;
+import net.hcfrevival.classes.listener.*;
 import net.hcfrevival.classes.task.ConsumableCooldownTask;
+import net.hcfrevival.classes.task.RogueCloakStateUpdateTask;
 import net.hcfrevival.classes.types.IClass;
-import net.hcfrevival.classes.types.impl.Archer;
-import net.hcfrevival.classes.types.impl.Bard;
-import net.hcfrevival.classes.types.impl.Diver;
-import net.hcfrevival.classes.types.impl.Miner;
+import net.hcfrevival.classes.types.impl.*;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -34,7 +29,9 @@ public class ClassService implements IAresService {
     public final NamespacedKey namespacedKey;
     public ClassGlobalConfig globalConfig;
     public List<IClass> classRepository;
+
     public BukkitTask cooldownCleanupTask;
+    public BukkitTask rogueInvisibilityTask;
 
     public ClassService(AresPlugin plugin) {
         this.plugin = plugin;
@@ -48,18 +45,21 @@ public class ClassService implements IAresService {
         this.globalConfig.loadConfig();
 
         this.cooldownCleanupTask = new Scheduler(plugin).async(new ConsumableCooldownTask(this)).repeat(0L, 1L).run();
+        this.rogueInvisibilityTask = new Scheduler(plugin).sync(new RogueCloakStateUpdateTask(this)).repeat(0L, 10L).run();
 
         // Class initialization
         classRepository.add(new Archer(this));
         classRepository.add(new Miner(this));
         classRepository.add(new Bard(this));
         classRepository.add(new Diver(this));
+        classRepository.add(new Rogue(this));
         classRepository.forEach(toLoad -> toLoad.getConfig().load());
 
         plugin.registerListener(new ArcherListener(this));
         plugin.registerListener(new ClassArmorListener(this));
         plugin.registerListener(new ConsumableListener(this));
         plugin.registerListener(new DiverListener(this));
+        plugin.registerListener(new RogueListener(this));
     }
 
     @Override
