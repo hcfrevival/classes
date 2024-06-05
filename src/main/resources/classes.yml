@@ -25,18 +25,19 @@ data:
     passive:
       SPEED: 2
       RESISTANCE: 1
+      FIRE_RESISTANCE: 1
     holdables:
       SPEED:
         material: SUGAR
         amplifier: 1
         duration: 5
-      RESISTANCE:
-        material: IRON_INGOT
-        amplifier: 0
-        duration: 5
       JUMP_BOOST:
         material: RABBIT_FOOT
         amplifier: 1
+        duration: 5
+      FIRE_RESISTANCE:
+        material: MAGMA_CREAM
+        amplifier: 0
         duration: 5
     consumables:
       LEVITATION:
@@ -48,44 +49,68 @@ data:
       SPEED:
         material: SUGAR
         application: FRIENDLY
-        cooldown: 60
-        duration: 5
-        amplifier: 5
-      JUMP_BOOST:
-        material: FRIENDLY
+        cooldown: 45
         duration: 5
         amplifier: 3
+      JUMP_BOOST:
+        material: RABBIT_FOOT
+        duration: 5
+        amplifier: 6
+        cooldown: 45
+        application: FRIENDLY
+      REGENERATION:
+        material: GHAST_TEAR
+        duration: 5
+        amplifier: 2
         cooldown: 60
-        application: SELF
+        application: FRIENDLY
+      WEAKNESS:
+        material: FERMENTED_SPIDER_EYE
+        duration: 5
+        amplifier: 0
+        cooldown: 120
+        application: FRIENDLY
+      RESISTANCE:
+        material: IRON_INGOT
+        duration: 5
+        amplifier: 0
+        cooldown: 60
+        application: FRIENDLY
+      INCREASE_DAMAGE:
+        material: BLAZE_POWDER
+        duration: 5
+        amplifier: 0
+        cooldown: 60
+        application: FRIENDLY
   archer:
     warmup: 10
-    max-damage-dealt: 30
-    consecutive-base-damage: 5.0
+    max-damage-dealt: 18.0
+    consecutive-base-damage: 1.25
     consecutive-multiplier: 1.25
-    damage-per-block: 0.1
+    damage-per-block: 0.2
     mark-duration: 10
-    mark-percentage: 0.15
+    mark-percentage: 0.10
     passive:
-      SPEED: 2
+      SPEED: 3
       RESISTANCE: 1
     consumables:
       LEVITATION:
         material: PHANTOM_MEMBRANE
         application: SELF
-        cooldown: 120
+        cooldown: 60
         duration: 5
         amplifier: 5
       SPEED:
         material: SUGAR
         application: SELF
-        cooldown: 60
+        cooldown: 45
         duration: 5
-        amplifier: 5
+        amplifier: 4
       JUMP_BOOST:
         material: RABBIT_FOOT
         duration: 5
         amplifier: 3
-        cooldown: 60
+        cooldown: 45
         application: SELF
   miner:
     warmup: 5
@@ -112,18 +137,18 @@ data:
       LEVITATION:
         material: PHANTOM_MEMBRANE
         application: SELF
-        cooldown: 120
+        cooldown: 60
         duration: 5
         amplifier: 5
       SPEED:
         material: SUGAR
         application: SELF
-        cooldown: 60
+        cooldown: 45
         duration: 5
-        amplifier: 5
+        amplifier: 4
       JUMP_BOOST:
         material: RABBIT_FOOT
         duration: 5
         amplifier: 3
-        cooldown: 60
+        cooldown: 45
         application: SELF
