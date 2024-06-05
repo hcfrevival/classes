@@ -25,6 +25,19 @@ data:
     passive:
       SPEED: 2
       RESISTANCE: 1
+    holdables:
+      SPEED:
+        material: SUGAR
+        amplifier: 1
+        duration: 5
+      RESISTANCE:
+        material: IRON_INGOT
+        amplifier: 0
+        duration: 5
+      JUMP_BOOST:
+        material: RABBIT_FOOT
+        amplifier: 1
+        duration: 5
     consumables:
       LEVITATION:
         material: PHANTOM_MEMBRANE
@@ -80,3 +93,37 @@ data:
       SPEED: 2
       NIGHT_VISION: 0
       HASTE: 8
+  rogue:
+    warmup: 10
+    backstab-cooldown: 3
+    grapple-cooldown: 5
+    cloak-cooldown: 300
+    backstab-damage: 6.0
+    invisibility-radius:
+      full: 16.0
+      partial: 8.0
+    grapple:
+      horizontal-speed: 1.25
+      vertical-speed: 0.25
+    passive:
+      SPEED: 2
+      RESISTANCE: 1
+    consumables:
+      LEVITATION:
+        material: PHANTOM_MEMBRANE
+        application: SELF
+        cooldown: 120
+        duration: 5
+        amplifier: 5
+      SPEED:
+        material: SUGAR
+        application: SELF
+        cooldown: 60
+        duration: 5
+        amplifier: 5
+      JUMP_BOOST:
+        material: RABBIT_FOOT
+        duration: 5
+        amplifier: 3
+        cooldown: 60
+        application: SELF

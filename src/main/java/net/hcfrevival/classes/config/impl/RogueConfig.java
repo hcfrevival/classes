@@ -31,6 +31,7 @@ public final class RogueConfig extends GenericConfig {
         this.backstabCooldown = conf.getInt(key + "backstab-cooldown", 3);
         this.grappleCooldown = conf.getInt(key + "grapple-cooldown", 5);
         this.cloakCooldown = conf.getInt(key + "cloak-cooldown", 300);
+        this.backstabDamage = conf.getDouble(key + "backstab-damage", 6.0);
         this.fullInvisibilityRadius = conf.getDouble(key + "invisibility-radius.full", 16.0);
         this.partialInvisibilityRadius = conf.getDouble(key + "invisibility-radius.partial", 8.0);
         this.grappleHorizontalSpeed = conf.getDouble(key + "grapple.horizontal-speed", 1.25);

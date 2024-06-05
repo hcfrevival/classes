@@ -5,6 +5,7 @@ import gg.hcfactions.libs.bukkit.AresPlugin;
 import gg.hcfactions.libs.bukkit.scheduler.Scheduler;
 import gg.hcfactions.libs.bukkit.services.IAresService;
 import lombok.Getter;
+import net.hcfrevival.classes.command.ClassCommand;
 import net.hcfrevival.classes.config.ClassGlobalConfig;
 import net.hcfrevival.classes.events.ClassDeactivateEvent;
 import net.hcfrevival.classes.events.ClassReadyEvent;
@@ -24,6 +25,8 @@ import java.util.Optional;
 
 @Getter
 public class ClassService implements IAresService {
+    public static final String ADMIN_PERMISSION = "ares.services.classes.admin";
+
     public final String name = "Classes";
     public final AresPlugin plugin;
     public final NamespacedKey namespacedKey;
@@ -55,11 +58,16 @@ public class ClassService implements IAresService {
         classRepository.add(new Rogue(this));
         classRepository.forEach(toLoad -> toLoad.getConfig().load());
 
+        // Listeners
         plugin.registerListener(new ArcherListener(this));
         plugin.registerListener(new ClassArmorListener(this));
         plugin.registerListener(new ConsumableListener(this));
         plugin.registerListener(new DiverListener(this));
         plugin.registerListener(new RogueListener(this));
+        plugin.registerListener(new HoldableListener(this));
+
+        // Commands
+        plugin.registerCommand(new ClassCommand(this));
     }
 
     @Override

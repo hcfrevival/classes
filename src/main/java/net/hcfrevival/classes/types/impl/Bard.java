@@ -7,7 +7,6 @@ import net.hcfrevival.classes.config.impl.BardConfig;
 import net.hcfrevival.classes.types.IClass;
 import org.bukkit.Material;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 

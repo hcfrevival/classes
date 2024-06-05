@@ -43,10 +43,15 @@ public interface IClassConsumable {
 
     default void consume(Player player, ItemStack item) {
         Set<UUID> nearbyPlayers = Sets.newHashSet();
-        player.getWorld().getNearbyPlayers(
-                player.getLocation(),
-                getParent().getService().getGlobalConfig().getConsumableRadius()).forEach(nearbyPlayer ->
+
+        if (getApplicationType().equals(EConsumableApplicationType.SELF)) {
+            nearbyPlayers.add(player.getUniqueId());
+        } else {
+            player.getWorld().getNearbyPlayers(
+                    player.getLocation(),
+                    getParent().getService().getGlobalConfig().getConsumableRadius()).forEach(nearbyPlayer ->
                     nearbyPlayers.add(nearbyPlayer.getUniqueId()));
+        }
 
         ClassConsumeItemEvent consumeEvent = new ClassConsumeItemEvent(player, this, nearbyPlayers);
         Bukkit.getPluginManager().callEvent(consumeEvent);
@@ -101,11 +106,14 @@ public interface IClassConsumable {
 
         if (!getApplicationType().equals(EConsumableApplicationType.SELF)) {
             int affectedCount = (int)consumeEvent.getAffectedPlayers().stream().filter(affectedUUID -> !affectedUUID.equals(player.getUniqueId())).count();
-            Component affectedComponent = Component.text("Your effect has been applied to", NamedTextColor.BLUE)
-                    .appendSpace().append(Component.text(affectedCount, NamedTextColor.AQUA))
-                    .appendSpace().append(Component.text("player" + (affectedCount > 1 ? "s" : ""), NamedTextColor.BLUE));
 
-            player.sendMessage(affectedComponent);
+            if (affectedCount > 0) {
+                Component affectedComponent = Component.text("Your effect has been applied to", NamedTextColor.BLUE)
+                        .appendSpace().append(Component.text(affectedCount, NamedTextColor.AQUA))
+                        .appendSpace().append(Component.text("player" + (affectedCount > 1 ? "s" : ""), NamedTextColor.BLUE));
+
+                player.sendMessage(affectedComponent);
+            }
         }
     }
 }

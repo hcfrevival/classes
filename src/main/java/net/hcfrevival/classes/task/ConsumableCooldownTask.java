@@ -12,6 +12,7 @@ import net.hcfrevival.classes.events.ClassConsumableUnlockEvent;
 import net.hcfrevival.classes.events.PlayerCallOfTheSeaCooldownExpireEvent;
 import net.hcfrevival.classes.events.PlayerRiptideCooldownExpireEvent;
 import net.hcfrevival.classes.types.impl.Diver;
+import net.hcfrevival.classes.types.impl.Rogue;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -68,6 +69,73 @@ public final class ConsumableCooldownTask extends BukkitRunnable {
                 });
             }
             // Diver End
+
+            // Rogue Start
+            if (playerClass instanceof Rogue rogue) {
+                if (!rogue.getBackstabCooldowns().isEmpty()) {
+                    Set<UUID> toRemove = Sets.newHashSet();
+
+                    rogue.getBackstabCooldowns().forEach((uuid, expire) -> {
+                        if (expire <= Time.now()) {
+                            toRemove.add(uuid);
+                        }
+                    });
+
+                    toRemove.forEach(removedUUID -> {
+                        rogue.getBackstabCooldowns().remove(removedUUID);
+                        new Scheduler(service.getPlugin()).sync(() -> {
+                            Player player = Bukkit.getPlayer(removedUUID);
+
+                            if (player != null && player.isOnline()) {
+                                ClassMessages.printConsumableUnlocked(player, "Backstab");
+                            }
+                        }).run();
+                    });
+                }
+
+                if (!rogue.getCloakCooldowns().isEmpty()) {
+                    Set<UUID> toRemove = Sets.newHashSet();
+
+                    rogue.getCloakCooldowns().forEach((uuid, expire) -> {
+                        if (expire <= Time.now()) {
+                            toRemove.add(uuid);
+                        }
+                    });
+
+                    toRemove.forEach(removedUUID -> {
+                        rogue.getCloakCooldowns().remove(removedUUID);
+                        new Scheduler(service.getPlugin()).sync(() -> {
+                            Player player = Bukkit.getPlayer(removedUUID);
+
+                            if (player != null && player.isOnline()) {
+                                ClassMessages.printConsumableUnlocked(player, "Cloak");
+                            }
+                        }).run();
+                    });
+                }
+
+                if (!rogue.getGrappleCooldowns().isEmpty()) {
+                    Set<UUID> toRemove = Sets.newHashSet();
+
+                    rogue.getGrappleCooldowns().forEach((uuid, expire) -> {
+                        if (expire <= Time.now()) {
+                            toRemove.add(uuid);
+                        }
+                    });
+
+                    toRemove.forEach(removedUUID -> {
+                        rogue.getBackstabCooldowns().remove(removedUUID);
+                        new Scheduler(service.getPlugin()).sync(() -> {
+                            Player player = Bukkit.getPlayer(removedUUID);
+
+                            if (player != null && player.isOnline()) {
+                                ClassMessages.printConsumableUnlocked(player, "Grapple");
+                            }
+                        }).run();
+                    });
+                }
+            }
+            // Rogue End
         });
 
         // Consumables
